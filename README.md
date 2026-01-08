@@ -35,9 +35,7 @@ Briefly explain what the player does and how they win or progress.
 
 | Category | Tech |
 |--------|------|
-| Language | Java / C++ / Python |
-| Framework / Engine | Unity / Godot / LibGDX |
-| Graphics | OpenGL / Pygame |
+| Language | Java |
 | Tools | Git, GitHub, VS Code |
 
 ---
@@ -64,3 +62,8 @@ This project demonstrates understanding of:
 1. Paste code into VSCode or another IDE
 2. Make sure you have all the Java extensions downloaded
 3. Run!
+
+---
+
+## ✏️ Created By
+Srishail, Zain, Raghav
