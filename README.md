@@ -1,15 +1,6 @@
-# 🎮 Project Title  
-> *A short, catchy tagline for your game*
+# 🎮 Star Invaders 
 
 ![Game Screenshot or Banner](assets/banner.png)
-
-<p align="center">
-  <img src="https://img.shields.io/badge/Language-Java-blue" />
-  <img src="https://img.shields.io/badge/Engine-Unity-black" />
-  <img src="https://img.shields.io/badge/Status-Completed-success" />
-  <img src="https://img.shields.io/badge/Course-CS%20Final%20Project-purple" />
-</p>
-
 ---
 
 ## 🧠 Overview
