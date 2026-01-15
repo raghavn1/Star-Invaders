@@ -1,14 +1,14 @@
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
+import javax.swing.*;
 
 public class TopDownShooter extends JPanel implements ActionListener, KeyListener, MouseListener, MouseMotionListener {
 
-    private Timer timer;
+    public Timer timer;
     private boolean isGameOver = false;
     private int score = 0;
     private boolean wPressed, aPressed, sPressed, dPressed;
@@ -18,16 +18,10 @@ public class TopDownShooter extends JPanel implements ActionListener, KeyListene
     private ArrayList<Zombie> zombies;
     private ArrayList<Bullet> bullets;
     private Random random;
+    private GameOverScreen gameOverScreen;
 
     public static void main(String[] args) {
-        JFrame frame = new JFrame("Java Swing Top-Down Shooter");
-        TopDownShooter game = new TopDownShooter();
-        frame.add(game);
-        frame.pack();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLocationRelativeTo(null);
-        frame.setResizable(false);
-        frame.setVisible(true);
+        
     }
 
     public TopDownShooter() {
@@ -38,18 +32,27 @@ public class TopDownShooter extends JPanel implements ActionListener, KeyListene
         addMouseListener(this);
         addMouseMotionListener(this);
 
+        this.gameOverScreen = new GameOverScreen();
+        gameOverScreen.setVisible(false);
+        this.add(gameOverScreen, BorderLayout.CENTER);
+
         initGame();
         timer = new Timer(16, this);
-        timer.start();
+        //timer.start();
     }
 
-    private void initGame() {
+    public GameOverScreen getGameOverScreen(){
+        return gameOverScreen;
+    }
+
+    public void initGame() {
         player = new Player(GameConstants.WIDTH / 2, GameConstants.HEIGHT / 2);
         zombies = new ArrayList<>();
         bullets = new ArrayList<>();
         random = new Random();
         score = 0;
         isGameOver = false;
+        gameOverScreen.setVisible(false);
         wPressed = aPressed = sPressed = dPressed = false;
     }
 
@@ -135,6 +138,7 @@ public class TopDownShooter extends JPanel implements ActionListener, KeyListene
 
         if (isGameOver) {
             drawGameOver(g2d);
+            timer.stop();
             return;
         }
 
@@ -164,15 +168,11 @@ public class TopDownShooter extends JPanel implements ActionListener, KeyListene
     }
 
     private void drawGameOver(Graphics2D g) {
-        g.setColor(Color.RED);
-        g.setFont(new Font("Arial", Font.BOLD, 50));
-        String msg = "GAME OVER";
-        FontMetrics fm = g.getFontMetrics();
-        g.drawString(msg, (GameConstants.WIDTH - fm.stringWidth(msg)) / 2, GameConstants.HEIGHT / 2);
+       gameOverScreen.setOpaque(true);
+        gameOverScreen.setVisible(true);
     }
 
     @Override public void mousePressed(MouseEvent e) {
-        if (isGameOver) { initGame(); repaint(); return; }
         double centerX = player.x + GameConstants.PLAYER_SIZE / 2.0;
         double centerY = player.y + GameConstants.PLAYER_SIZE / 2.0;
         bullets.add(new Bullet(centerX, centerY, player.angle));
