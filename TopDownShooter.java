@@ -13,16 +13,16 @@ public class TopDownShooter extends JPanel implements ActionListener, KeyListene
     private int score = 0;
     private boolean wPressed, aPressed, sPressed, dPressed;
     private int mouseX, mouseY;
+    private int Ammo = 30;
+    private boolean shootable = true;
 
     private Player player;
     private ArrayList<Zombie> zombies;
     private ArrayList<Bullet> bullets;
+    private ArrayList<Ammunition> ammunitions;
     private Random random;
     private GameOverScreen gameOverScreen;
 
-    public static void main(String[] args) {
-        
-    }
 
     public TopDownShooter() {
         setPreferredSize(new Dimension(GameConstants.WIDTH, GameConstants.HEIGHT));
@@ -49,8 +49,10 @@ public class TopDownShooter extends JPanel implements ActionListener, KeyListene
         player = new Player(GameConstants.WIDTH / 2, GameConstants.HEIGHT / 2);
         zombies = new ArrayList<>();
         bullets = new ArrayList<>();
+        ammunitions = new ArrayList<>();
         random = new Random();
         score = 0;
+        Ammo = 30;
         isGameOver = false;
         gameOverScreen.setVisible(false);
         wPressed = aPressed = sPressed = dPressed = false;
@@ -64,9 +66,14 @@ public class TopDownShooter extends JPanel implements ActionListener, KeyListene
         updateBullets();
         updateZombies();
 
+        if(Ammo <=0){
+            shootable = false;
+        }
+
         if (random.nextInt(100) < 2 + (score / 100)) spawnZombie();
 
         checkCollisions();
+        collectAmmunition();
         repaint();
     }
 
@@ -92,6 +99,7 @@ public class TopDownShooter extends JPanel implements ActionListener, KeyListene
         }
     }
 
+
     private void updateZombies() {
         for (Zombie z : zombies) z.chase(player);
     }
@@ -108,6 +116,13 @@ public class TopDownShooter extends JPanel implements ActionListener, KeyListene
         zombies.add(new Zombie(x, y));
     }
 
+    private void spawnAmmunition(double  x, double  y){
+        ammunitions.add(new Ammunition(x, y));
+    }
+        
+
+
+
     private void checkCollisions() {
         Rectangle playerRect = player.getBounds();
         Iterator<Zombie> zIt = zombies.iterator();
@@ -121,12 +136,30 @@ public class TopDownShooter extends JPanel implements ActionListener, KeyListene
             while (bIt.hasNext()) {
                 Bullet b = bIt.next();
                 if (b.getBounds().intersects(zombieRect)) {
+                    spawnAmmunition(z.x, z.y);
                     bIt.remove();
                     zIt.remove();
+                   
                     score += 10;
                     break;
                 }
             }
+        }
+    }
+
+    private void collectAmmunition(){
+          Rectangle playerRect = player.getBounds();
+            Iterator<Ammunition> aIt = ammunitions.iterator();
+         while(aIt.hasNext()){
+            Ammunition a = aIt.next();
+            Rectangle ammunitionRect = a.getBounds();
+
+            if (playerRect.intersects(ammunitionRect)) {
+                aIt.remove();
+                Ammo+=5;
+                break;
+            }
+
         }
     }
 
@@ -161,21 +194,33 @@ public class TopDownShooter extends JPanel implements ActionListener, KeyListene
         g2d.setColor(Color.YELLOW);
         for (Bullet b : bullets) g2d.fillOval((int)b.x, (int)b.y, GameConstants.BULLET_SIZE, GameConstants.BULLET_SIZE);
 
+        // drawing ammunitions
+        g2d.setColor(Color.BLUE);
+        for(Ammunition a: ammunitions) g2d.fillRect((int)a.x, (int) a.y, GameConstants.AMMO_SIZE, GameConstants.AMMO_SIZE);
+
         // UI
         g2d.setColor(Color.WHITE);
         g2d.setFont(new Font("Arial", Font.BOLD, 18));
         g2d.drawString("Score: " + score, 10, 25);
+        g2d.drawString("Ammo:" + Ammo, 10, 45 );
     }
 
     private void drawGameOver(Graphics2D g) {
        gameOverScreen.setOpaque(true);
         gameOverScreen.setVisible(true);
+        gameOverScreen.scoreText("Score: " + score);
     }
 
     @Override public void mousePressed(MouseEvent e) {
+        if(shootable == true){
         double centerX = player.x + GameConstants.PLAYER_SIZE / 2.0;
         double centerY = player.y + GameConstants.PLAYER_SIZE / 2.0;
         bullets.add(new Bullet(centerX, centerY, player.angle));
+        Ammo-=1;
+        }else {
+            return;
+        }
+        
     }
 
     @Override public void mouseMoved(MouseEvent e) { mouseX = e.getX(); mouseY = e.getY(); }
