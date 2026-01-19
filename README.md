@@ -45,7 +45,7 @@ This project demonstrates understanding of:
 ## 🚀 Installation & Running the Game
 
 ### Prerequisites
-- Java 17+ / Python 3.10+ / Unity Hub
+- Java 17+
 
 ### Steps
 1. Paste code into VSCode or another IDE
