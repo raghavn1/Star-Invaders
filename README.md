@@ -1,33 +1,22 @@
 # 🎮 Star Invaders 
-
-![Game Screenshot or Banner](assets/banner.png)
 ---
 
 ## 🧠 Overview
 
-**Project Title** is a game developed as a final project for **[Course Name]**.  
+**Star Invaders** is a game developed as a final project for **ICS4UR**.  
 The goal of this project was to apply core computer science concepts—such as algorithms, data structures, object-oriented design, and game logic—in a fun and interactive environment.
 
 🎯 **Objective:**  
-Briefly explain what the player does and how they win or progress.
+Fight the zombies by clicking your mouse to shoot and pick up the ammo crates to reload. You die once the zombies get to you and hit you. Your goal is to kill as many of them for as long as possible.
 
 ---
 
 ## 🕹️ Gameplay Features
 
-- 🎲 Engaging core mechanics
-- 🤖 AI-driven enemies or NPCs
-- 🌍 Interactive game world
+- 🤖 Path-seeking enemies
 - 📈 Increasing difficulty over time
-- 💾 Save/load system (if applicable)
-
----
-
-## 📸 Screenshots
-
-| Gameplay | Menu | Boss Fight |
-|--------|------|------------|
-| ![](assets/gameplay.png) | ![](assets/menu.png) | ![](assets/boss.png) |
+- 🧬 Different skins
+- 💾 Save/load system
 
 ---
 
@@ -46,7 +35,7 @@ This project demonstrates understanding of:
 
 - Object-Oriented Programming (OOP)
 - State Machines
-- Pathfinding Algorithms (A*, BFS, DFS)
+- Pathfinding
 - Collision Detection
 - Event Handling
 - Game Loops & Optimization
