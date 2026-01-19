@@ -19,7 +19,9 @@ public class Bullet extends GameObject {
     }
 
     //Method to get the bounding rectangle of the bullet for collision detection
+    @Override
     public Rectangle getBounds() {
         return new Rectangle((int)x, (int)y, GameConstants.BULLET_SIZE, GameConstants.BULLET_SIZE);
     }
+
 }
